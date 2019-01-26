@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<link rel="stylesheet" href="/assets/table.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+   function anchorup(id){
+     console.log(id);
+    var eggsid = id + "beggs";
+    console.log(eggsid);
+    var juiceid = id + "bjuice";
+    var saladid = id + "bsalad"; 
+    var deliverydate = id + "bdeliverydate";
+    var eggs = document.getElementById(eggsid).value;
+    var juice = document.getElementById(juiceid).value;
+    var salad = document.getElementById(saladid).value;
+    var deldate = document.getElementById(deliverydate).value;
+    var anchorhtml = document.getElementById("updateanchortag");
+    
+    var link  = '/brupdate?orderid='+id+'&beggs='+eggs+'&bsalad='+salad+'&bjuice='+juice+'&bdeliverydate='+deldate ;
+    var anchortag = document.createElement("a");
+    anchortagid = id+"anchor";
+    anchortag.setAttribute("href",link);
+    anchortag.setAttribute("id",anchortagid);
+    anchorhtml.innerHTML = "";
+    anchorhtml.append(anchortag);
+
+    document.getElementById(anchortagid).innerHTML = "Update";
+
+   }
+
+
+   function anchorlu(id){
+     console.log(id);
+    var eggsid = id + "leggs";
+    console.log(eggsid);
+    var meatid = id + "lmeat";
+    var saladid = id + "lsalad"; 
+    var deliverydate = id + "ldeliverydate";
+    var eggs = document.getElementById(eggsid).value;
+    var meat = document.getElementById(meatid).value;
+    var salad = document.getElementById(saladid).value;
+    var deldate = document.getElementById(deliverydate).value;
+    var anchorhtml = document.getElementById("lunchanchortag");
+    
+    var link  = '/lupdate?orderid='+id+'&leggs='+eggs+'&lsalad='+salad+'&lmeat='+meat+'&ldeliverydate='+deldate ;
+    var anchortag = document.createElement("a");
+    anchortagid = id+"anchor";
+    anchortag.setAttribute("href",link);
+    anchortag.setAttribute("id",anchortagid);
+    anchorhtml.innerHTML = "";
+    anchorhtml.append(anchortag);
+
+    document.getElementById(anchortagid).innerHTML = "Update";
+
+   }  
+
+
+  $(function(){
+
+    $('#presentmeals').click(function(){
+      $.ajax({
+        url: '/presentplans',
+        // dataType: "jsonp",
+        
+        type: 'GET',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        success: function(data) 
+        {
+            console.log(data);
+            console.log(data.length);
+            var number_of_rows = data.length;
+            var k = 0;
+            console.log(data[0].beggs);
+            var table_body = '<table id="presentmealtable"><thead><tr><th>Order Id:</th><th>Eggs</th><th>Salad</th><th>Juice</th><th>Date</th><th>Update</th><th>Delete</th></tr></thead><tbody>';
+                for(i = 0;i < data.length;i++)
+                {
+                    
+                    table_body+='<tr>';
+                    table_body +='<td>';
+                    table_body +='<input type = number value = '+data[i].id+' id = '+data[i].id+'  name =n'+data[i].id+'  readonly>';
+                    table_body +='</td>';
+                    
+                    
+                    table_body +='<td>';
+                    table_body +='<input type = number value = '+data[i].beggs+' id = '+data[i].id+'beggs  name ='+data[i].id+ 'beggs onchange= anchorup('+data[i].id+') >';
+                    table_body +='</td>';
+
+                    
+                    
+                    table_body +='<td>';
+                    table_body +='<input type = number value ='+data[i].bsalad+' id ='+data[i].id+ 'bsalad  name ='+data[i].id+ 'bsalad onchange= anchorup('+data[i].id+')  >';
+                    table_body +='</td>';
+
+                    
+                    table_body +='<td >';
+                    table_body +='<input type = number value = '+data[i].bjuice+' id ='+data[i].id+ 'bjuice  name='+data[i].id+ 'bjuice onchange= anchorup('+data[i].id+')  >';
+                    table_body +='</td>';
+
+                    table_body +='<td>';
+                    table_body +='<input type = date id = '+data[i].id+'bdeliverydate value = '+data[i].deliverydate+' name ='+data[i].id+ 'bdeliverydate onchange= anchorup('+data[i].id+') >';
+                    table_body +='</td>';
+                    
+ 
+                    table_body +='<td id = "updateanchortag">';
+                    table_body +='<a href= /brupdate?orderid='+data[i].id+'&beggs='+data[i].beggs+'&bsalad='+data[i].bsalad+'&bjuice='+data[i].bjuice+'&bdeliverydate='+1+'>Update</a>';
+                    table_body +='</td>';
+                    
+                    table_body +='<td >';
+                    table_body +='<input type = "submit" value = "submit" id ='+data[i].id+ 'bjuice  name='+data[i].id+ 'bjuice  >';
+                    table_body +='</td>';
+
+
+                    table_body+='</tr>';
+                    
+            }
+              
+            
+            table_body+='</tbody></table>';
+            $('#tablearea').html(table_body);
+            console.log('Success: ')
+        },
+        error: function (xhr, status, error) 
+        {
+            console.log('Error: ' + error.message);
+            $('#tablearea').html('Error connecting to the server.');
+        },
+      });
+
+
+
+$('#lunchmeals').click(function(){
+      $.ajax({
+        url: '/lunchplans',
+        // dataType: "jsonp",
+        
+        type: 'GET',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        success: function(data) 
+        {
+            console.log(data);
+            console.log(data.length);
+            var number_of_rows = data.length;
+            
+            var table_body = '<table id="presentmealtable"><thead><tr><th>Order Id:</th><th>Eggs</th><th>Salad</th><th>Meat</th><th>Date</th><th>Update</th><th>Delete</th></tr></thead><tbody>';
+                for(i = 0;i < data.length;i++)
+                {
+                    
+                    table_body+='<tr>';
+                    table_body +='<td>';
+                    table_body +='<input type = number value = '+data[i].id+' id = '+data[i].id+'  name =n'+data[i].id+'  readonly>';
+                    table_body +='</td>';
+                    
+                    
+                    table_body +='<td>';
+                    table_body +='<input type = number value = '+data[i].leggs+' id = '+data[i].id+'leggs  name ='+data[i].id+ 'leggs onchange= anchorlu('+data[i].id+') >';
+                    table_body +='</td>';
+
+                    
+                    
+                    table_body +='<td>';
+                    table_body +='<input type = number value ='+data[i].lsalad+' id ='+data[i].id+ 'lsalad  name ='+data[i].id+ 'lsalad onchange= anchorlu('+data[i].id+')  >';
+                    table_body +='</td>';
+
+                    
+                    table_body +='<td >';
+                    table_body +='<input type = number value = '+data[i].lmeat+' id ='+data[i].id+ 'lmeat  name='+data[i].id+ 'lmeat onchange= anchorlu('+data[i].id+')  >';
+                    table_body +='</td>';
+
+                    table_body +='<td>';
+                    table_body +='<input type = date id = '+data[i].id+'ldeliverydate value = '+data[i].deliverydate+' name ='+data[i].id+ 'ldeliverydate onchange= anchorlu('+data[i].id+') >';
+                    table_body +='</td>';
+                    
+ 
+                    table_body +='<td id = "lunchanchortag">';
+                    table_body +='<a href= /lupdate?orderid='+data[i].id+'&leggs='+data[i].leggs+'&lsalad='+data[i].lsalad+'&lmeat='+data[i].lmeat+'&ldeliverydate='+1+'>Update</a>';
+                    table_body +='</td>';
+                    
+                    table_body +='<td >';
+                    table_body +='<input type = "submit" value = "submit" id ='+data[i].id+ 'ljuice  name='+data[i].id+ 'ljuice  >';
+                    table_body +='</td>';
+
+
+                    table_body+='</tr>';
+                    
+            }
+              
+            
+            table_body+='</tbody></table>';
+            $('#tablearea').html(table_body);
+            console.log('Success: ')
+        },
+        error: function (xhr, status, error) 
+        {
+            console.log('Error: ' + error.message);
+            $('#tablearea').html('Error connecting to the server.');
+        },
+      });
+}); 
+}); 
+
+$('#dinnermeals').click(function(){
+      $.ajax({
+        url: '/dinnerplans',
+        // dataType: "jsonp",
+        
+        type: 'GET',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        success: function(data) 
+        {
+            console.log(data);
+            console.log(data.length);
+            var number_of_rows = data.length;
+            
+            var table_body = '<table id="presentmealtable"><thead><tr><th>Order Id:</th><th>Eggs</th><th>Salad</th><th>Meat</th><th>Date</th><th>Update</th><th>Delete</th></tr></thead><tbody>';
+                for(i = 0;i < data.length;i++)
+                {
+                    
+                    table_body+='<tr>';
+                    table_body +='<td>';
+                    table_body +='<input type = number value = '+data[i].id+' id = '+data[i].id+'  name =n'+data[i].id+'  readonly>';
+                    table_body +='</td>';
+                    
+                    
+                    table_body +='<td>';
+                    table_body +='<input type = number value = '+data[i].deggs+' id = '+data[i].id+'deggs  name ='+data[i].id+ 'deggs onchange= anchordi('+data[i].id+') >';
+                    table_body +='</td>';
+
+                    
+                    
+                    table_body +='<td>';
+                    table_body +='<input type = number value ='+data[i].dsalad+' id ='+data[i].id+ 'dsalad  name ='+data[i].id+ 'dsalad onchange= anchordi('+data[i].id+')  >';
+                    table_body +='</td>';
+
+                    
+                    table_body +='<td >';
+                    table_body +='<input type = number value = '+data[i].dmeat+' id ='+data[i].id+ 'dmeat  name='+data[i].id+ 'dmeat onchange= anchordi('+data[i].id+')  >';
+                    table_body +='</td>';
+
+                    table_body +='<td>';
+                    table_body +='<input type = date id = '+data[i].id+'ddeliverydate value = '+data[i].deliverydate+' name ='+data[i].id+ 'ddeliverydate onchange= anchordi('+data[i].id+') >';
+                    table_body +='</td>';
+                    
+ 
+                    table_body +='<td id = "lunchanchortag">';
+                    table_body +='<a href= /dupdate?orderid='+data[i].id+'&deggs='+data[i].deggs+'&dsalad='+data[i].dsalad+'&dmeat='+data[i].dmeat+'&ddeliverydate='+1+'>Update</a>';
+                    table_body +='</td>';
+                    
+                    table_body +='<td >';
+                    table_body +='<input type = "submit" value = "submit" id ='+data[i].id+ 'ljuice  name='+data[i].id+ 'ljuice  >';
+                    table_body +='</td>';
+
+
+                    table_body+='</tr>';
+                    
+            }
+              
+            
+            table_body+='</tbody></table>';
+            $('#tablearea').html(table_body);
+            console.log('Success: ')
+        },
+        error: function (xhr, status, error) 
+        {
+            console.log('Error: ' + error.message);
+            $('#tablearea').html('Error connecting to the server.');
+        },
+      });
+}); 
+}); 
+
+
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+
+.navbar {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+}
+
+.navbar a {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+</style>
+
+<style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+.tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 10%;
+  height: 200px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+
+</style>
+<body>
+
+
+
+<div class="navbar">
+  <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="#"><i class="fa fa-fw fa-search"></i> Search</a> 
+  <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+  <a href="#"><i class="fa fa-fw fa-user"></i> Login</a>
+</div>
+
+<div>
+<h3>Welcome </h3><p><h3><%= loginid %><h3></p>
+</div>
+
+<div>
+<h4 ><a href="/chooseplan" style="text-decoration:none; text-align:right">Choose a plan</a></h4>
+</div>
+<table class="tab" id="tb1">
+
+  <tr><td><button class="tablinks" name= "past" id = "presentmeals" >breakfast</button></td></tr>
+  <tr><td><button class="tablinks" id = "lunchmeals" >Lunch</button></td></tr>
+  <tr><td><button class="tablinks" id = "dinnermeals" >Dinner</button></td></tr>
+
+</table>
+<div id= "tablearea">
+
+  </div>
+</body>
+</html> 

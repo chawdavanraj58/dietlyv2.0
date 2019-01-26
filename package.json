@@ -1,0 +1,35 @@
+{
+  "name": "masterproject",
+  "version": "0.0.1",
+  "description": "a project created for end-term ",
+  "main": "login.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chawdavanraj58/MainProject.git"
+  },
+  "author": "Vanraj Chawda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chawdavanraj58/MainProject/issues"
+  },
+  "homepage": "https://github.com/chawdavanraj58/MainProject#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "deasync": "^0.1.14",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "get-form-data": "^2.0.0",
+    "moment": "^2.24.0",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-plugin-promise": "^4.0.1"
+  }
+}

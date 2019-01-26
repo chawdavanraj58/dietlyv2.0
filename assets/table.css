@@ -1,0 +1,15 @@
+
+
+  
+
+th, td {
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+}
+th {
+    background-color: gray;
+    color: white;
+    font-style: bold;
+    font-size: 35px;
+}
